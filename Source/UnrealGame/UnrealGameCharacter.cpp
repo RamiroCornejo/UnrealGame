@@ -1,6 +1,7 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "UnrealGameCharacter.h"
+#include "MyLevelGameMode.h"
 #include "UnrealGameProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -103,6 +104,7 @@ void AUnrealGameCharacter::BeginPlay()
 		VR_Gun->SetHiddenInGame(true, true);
 		Mesh1P->SetHiddenInGame(false, true);
 	}
+	RestartLife();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -297,4 +299,43 @@ bool AUnrealGameCharacter::EnableTouchscreenMovement(class UInputComponent* Play
 	}
 	
 	return false;
+}
+
+void AUnrealGameCharacter::GetDamage(float damage) {
+
+	CurrentLife -= damage;
+	FString IntAsString = FString::FromInt(CurrentLife);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, *IntAsString);
+	// If the damage depletes our health set our lifespan to zero - which will destroy the actor 
+	float Porcentaje = CurrentLife / MaxLife;
+	LifeBar->UpdateLifeBar(Porcentaje);
+
+	if (CurrentLife <= 0.f)
+	{
+		if (Lifes > 0) {
+			Lifes--;
+
+
+			AMyLevelGameMode* myGamemode = Cast<AMyLevelGameMode>(GetWorld()->GetAuthGameMode());
+			if (myGamemode != nullptr) {
+				//Destroy();
+				UE_LOG(LogTemp, Log, TEXT("tiene el gamemode bueno"));
+				LifeBar->RemoveFromViewport();
+				myGamemode->restart(this);
+			}
+		}
+		else {
+			if (GEngine) {
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, *DeathString);
+			}
+		}
+
+	}
+}
+void AUnrealGameCharacter::RestartLife() {
+	CurrentLife = MaxLife;
+
+	LifeBar = CreateWidget<UMyPlayerWidget>(GetWorld()->GetFirstPlayerController(), CharacterInfoWidgetClass);
+	LifeBar->AddToViewport(1);
+	UE_LOG(LogTemp, Log, TEXT("empezo"));
 }
