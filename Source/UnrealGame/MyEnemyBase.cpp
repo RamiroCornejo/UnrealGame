@@ -20,9 +20,7 @@ AMyEnemyBase::AMyEnemyBase()
 
 	StaticMesh->SetupAttachment(Root);
 	BoxCollider->SetupAttachment(StaticMesh);
-	if (UMyWidget == nullptr) {
-		UE_LOG(LogTemp, Log, TEXT("Widget component nulo"));
-	}
+	
 }
 
 // Called when the game starts or when spawned
