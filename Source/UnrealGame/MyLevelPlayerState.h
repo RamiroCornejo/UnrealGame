@@ -15,6 +15,6 @@ class UNREALGAME_API AMyLevelPlayerState : public APlayerState
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere)
-		int lifes;
-	void Death();
+		int Flifes;
+	void FDeath();
 };

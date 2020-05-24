@@ -14,8 +14,8 @@ class UNREALGAME_API UMyPlayerWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	void UpdateLifeBar(float value);
+	void FUpdateLifeBar(float value);
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-		class UProgressBar* HeatlhBar;
+		class UProgressBar* UHeatlhBar;
 };

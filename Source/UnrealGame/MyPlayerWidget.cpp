@@ -3,8 +3,8 @@
 
 #include "MyPlayerWidget.h"
 #include "UMG/Public/Components/ProgressBar.h"
-void UMyPlayerWidget::UpdateLifeBar(float value) {
+void UMyPlayerWidget::FUpdateLifeBar(float value) {
 
-	HeatlhBar->SetPercent(value);
+	UHeatlhBar->SetPercent(value);
 }
 

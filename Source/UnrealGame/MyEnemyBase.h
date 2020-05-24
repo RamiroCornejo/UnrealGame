@@ -21,13 +21,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UPROPERTY(VisibleAnywhere)
-		USceneComponent* Root;
+		USceneComponent* URoot;
 
 	UPROPERTY(EditAnywhere)
-		class UBoxComponent* BoxCollider;
+		class UBoxComponent* UBoxCollider;
 
 	UPROPERTY(EditAnywhere)
-		class UStaticMeshComponent* StaticMesh;
+		class UStaticMeshComponent* UStaticMesh;
 	
 	UPROPERTY(BlueprintReadWrite)
 		 UWidgetComponent* UMyWidget;
@@ -37,8 +37,7 @@ protected:
 	
 	UPROPERTY(BlueprintReadWrite)
 		 UMyPlayerWidget* UBarLife;
-	FTimerHandle TimerHandle;
-	void tickDamage();
+	
 public:	
 	// Called every frame
 	UFUNCTION(BlueprintCallable)

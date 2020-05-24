@@ -107,25 +107,28 @@ protected:
 	 */
 	void LookUpAtRate(float Rate);
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<UMyPlayerWidget> CharacterInfoWidgetClass;
+		TSubclassOf<UMyPlayerWidget> TCharacterInfoWidgetClass;
 
 	UPROPERTY()
-		UMyPlayerWidget* LifeBar;
+		UMyPlayerWidget* ULifeBar;
 	UFUNCTION()
 		void RestartLife();
 
-
+	UPROPERTY(EditDefaultsOnly)
+		float FFireTraceDistance = 2000.0f;
+	UPROPERTY(EditDefaultsOnly)
+		float FDamage = 1.f;
 
 	UFUNCTION(BlueprintCallable)
-		void GetDamage(float damage);
+		void FGetDamage(float damage);
 	UPROPERTY(EditAnywhere)
-		float MaxLife;
+		float FMaxLife;
 
-	float CurrentLife;
+	float FCurrentLife;
 	UPROPERTY(EditAnywhere)
-		int Lifes;
+		int FLifes;
 	UPROPERTY(EditAnywhere)
-		FString DeathString;
+		FString FDeathString;
 	struct TouchData
 	{
 		TouchData() { bIsPressed = false;Location=FVector::ZeroVector;}

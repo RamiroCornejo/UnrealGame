@@ -12,14 +12,14 @@ AMyEnemyBase::AMyEnemyBase()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	Root = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
+	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	//UMyWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("widget"));
-	BoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
+	UBoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
+	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
 
-	StaticMesh->SetupAttachment(Root);
-	BoxCollider->SetupAttachment(StaticMesh);
+	UStaticMesh->SetupAttachment(URoot);
+	UBoxCollider->SetupAttachment(UStaticMesh);
 	
 }
 
@@ -34,7 +34,7 @@ void AMyEnemyBase::BeginPlay()
 	if (UBarLife == nullptr) {
 		UE_LOG(LogTemp, Log, TEXT("nulo"));
 	}
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::tickDamage, 3.f, true);
+	
 }
 
 // Called every frame
@@ -54,14 +54,11 @@ void AMyEnemyBase::FGetDamage(float damage)
 {
 	FCurrentHealth -= damage;
 	float FPercentage = FCurrentHealth / FMaxHealth;
-	UBarLife->UpdateLifeBar(FPercentage);
+	UBarLife->FUpdateLifeBar(FPercentage);
 	UE_LOG(LogTemp, Log, TEXT("Dano"));
 }
 void AMyEnemyBase::FGetWidget(UWidgetComponent* widget)
 {
 	UMyWidget = widget;
 }
-void AMyEnemyBase::tickDamage()
-{
-	FGetDamage(2.f);
-}
+
