@@ -11,6 +11,8 @@
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
+#include "UnrealGame/MyEnemyBase.h"
+#include "EngineUtils.h"
 #include "DrawDebugHelpers.h"
 #include "UnrealGame/MyEnemyBase.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
@@ -359,4 +361,10 @@ void AUnrealGameCharacter::RestartLife() {
 	ULifeBar = CreateWidget<UMyPlayerWidget>(GetWorld()->GetFirstPlayerController(), TCharacterInfoWidgetClass);
 	ULifeBar->AddToViewport(1);
 	UE_LOG(LogTemp, Log, TEXT("empezo"));
+	for (TActorIterator<AMyEnemyBase> It(GetWorld()); It; ++It)
+	{
+		AMyEnemyBase* myEnemie = *It;
+		myEnemie->RemovePlayer();
+		// ...
+	}
 }

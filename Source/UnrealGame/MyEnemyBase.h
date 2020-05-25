@@ -6,7 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Components/WidgetComponent.h"
 #include "UnrealGame/MyPlayerWidget.h"
+#include "UnrealGame/UnrealGameCharacter.h"
 #include "MyEnemyBase.generated.h"
+
 
 UCLASS()
 class UNREALGAME_API AMyEnemyBase : public APawn
@@ -37,6 +39,9 @@ protected:
 	
 	UPROPERTY(BlueprintReadWrite)
 		 UMyPlayerWidget* UBarLife;
+	UPROPERTY()
+		AUnrealGameCharacter* APlayer;
+	
 	
 public:	
 	// Called every frame
@@ -45,7 +50,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void FGetWidget(UWidgetComponent* widget);
 	virtual void Tick(float DeltaTime) override;
-
+	void GetPlayer();
+	void RemovePlayer();
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

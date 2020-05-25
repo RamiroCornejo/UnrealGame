@@ -5,6 +5,9 @@
 #include "UnrealGame/MyPlayerWidget.h"
 #include "Components/WidgetComponent.h"
 #include "Components/BoxComponent.h"
+#include "EngineUtils.h"
+#include "UnrealGame/UnrealGameCharacter.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -41,7 +44,18 @@ void AMyEnemyBase::BeginPlay()
 void AMyEnemyBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (APlayer != nullptr) {
+		FVector TargetPosition = APlayer->GetActorLocation();		
+		FVector myPosition = FVector(GetActorLocation().X, GetActorLocation().Y,0.f);
+		FVector playerPos= FVector(TargetPosition.X, TargetPosition.Y, 0.f);
+		FVector Forward = playerPos-myPosition;
+		FVector WorldUp = FVector::UpVector;
+		FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, WorldUp);
+		SetActorRotation(Rot);
+	}
+	else {
+		GetPlayer();
+	}
 }
 
 // Called to bind functionality to input
@@ -55,10 +69,26 @@ void AMyEnemyBase::FGetDamage(float damage)
 	FCurrentHealth -= damage;
 	float FPercentage = FCurrentHealth / FMaxHealth;
 	UBarLife->FUpdateLifeBar(FPercentage);
-	UE_LOG(LogTemp, Log, TEXT("Dano"));
+	
 }
 void AMyEnemyBase::FGetWidget(UWidgetComponent* widget)
 {
 	UMyWidget = widget;
+}
+void AMyEnemyBase::GetPlayer()
+{
+	//for (TActorIterator<AUnrealGameCharacter> It(GetWorld()); It; ++It)
+	//{
+	//	APlayer = *It;
+	//	// ...
+	//}
+	APlayer = Cast<AUnrealGameCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	if (APlayer != nullptr) {
+		UE_LOG(LogTemp, Log, TEXT("tengo al player"));
+	}
+}
+void AMyEnemyBase::RemovePlayer()
+{
+	APlayer = nullptr;
 }
 
