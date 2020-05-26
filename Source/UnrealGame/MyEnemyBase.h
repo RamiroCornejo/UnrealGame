@@ -41,8 +41,14 @@ protected:
 		 UMyPlayerWidget* UBarLife;
 	UPROPERTY()
 		AUnrealGameCharacter* APlayer;
-	
-	
+	UPROPERTY(EditAnywhere)
+		float FMaxDistance;
+	UPROPERTY(EditAnywhere)
+		float FSpeed;
+	UPROPERTY(EditAnywhere)
+		int FLives;
+	FVector SpawnPos;
+	void FRevive();
 public:	
 	// Called every frame
 	UFUNCTION(BlueprintCallable)

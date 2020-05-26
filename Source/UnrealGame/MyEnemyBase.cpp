@@ -33,10 +33,7 @@ void AMyEnemyBase::BeginPlay()
 	
 	FCurrentHealth = FMaxHealth;
 	
-	
-	if (UBarLife == nullptr) {
-		UE_LOG(LogTemp, Log, TEXT("nulo"));
-	}
+	SpawnPos = GetActorLocation();
 	
 }
 
@@ -52,6 +49,13 @@ void AMyEnemyBase::Tick(float DeltaTime)
 		FVector WorldUp = FVector::UpVector;
 		FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, WorldUp);
 		SetActorRotation(Rot);
+		float distance = GetDistanceTo(APlayer);
+		if (distance > FMaxDistance) {
+			//FString IntAsString = FString::FromInt(distance);
+			FVector location = GetActorLocation();
+			location += GetActorForwardVector()*FSpeed;
+			SetActorLocation(location);
+		}
 	}
 	else {
 		GetPlayer();
@@ -69,6 +73,16 @@ void AMyEnemyBase::FGetDamage(float damage)
 	FCurrentHealth -= damage;
 	float FPercentage = FCurrentHealth / FMaxHealth;
 	UBarLife->FUpdateLifeBar(FPercentage);
+	if (FCurrentHealth <= 0) {
+		if (FLives > 0) {
+			FRevive();
+			FLives--;
+		}
+		else {
+			Destroy();
+		}
+		
+	}
 	
 }
 void AMyEnemyBase::FGetWidget(UWidgetComponent* widget)
@@ -90,5 +104,11 @@ void AMyEnemyBase::GetPlayer()
 void AMyEnemyBase::RemovePlayer()
 {
 	APlayer = nullptr;
+}
+void AMyEnemyBase::FRevive()
+{
+	SetActorLocation(SpawnPos);
+	FCurrentHealth = FMaxHealth;
+	UBarLife->FUpdateLifeBar(1);
 }
 

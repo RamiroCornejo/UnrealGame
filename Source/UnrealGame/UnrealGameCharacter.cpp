@@ -365,6 +365,7 @@ void AUnrealGameCharacter::RestartLife() {
 	{
 		AMyEnemyBase* myEnemie = *It;
 		myEnemie->RemovePlayer();
+		//UE_LOG(LogTemp, Log, TEXT("Busco"));
 		// ...
 	}
 }
