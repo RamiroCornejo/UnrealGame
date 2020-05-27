@@ -86,6 +86,7 @@ protected:
 	/** Fires a projectile. */
 	void OnFire();
 
+	void OnGrenade();
 	/** Resets HMD orientation and position in VR. */
 	void OnResetVR();
 
@@ -118,7 +119,8 @@ protected:
 		float FFireTraceDistance = 2000.0f;
 	UPROPERTY(EditDefaultsOnly)
 		float FDamage = 1.f;
-
+	UPROPERTY(EditDefaultsOnly)
+		int FMultiplyOfDamage = 2;
 	UFUNCTION(BlueprintCallable)
 		void FGetDamage(float damage);
 	UPROPERTY(EditAnywhere)

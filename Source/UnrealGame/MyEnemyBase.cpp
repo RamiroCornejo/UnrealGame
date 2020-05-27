@@ -20,9 +20,14 @@ AMyEnemyBase::AMyEnemyBase()
 	UBoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
 
 	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
+	UHeadCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("HeadCollider"));
+
+	UStaticHeadMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HeadMesh"));
 
 	UStaticMesh->SetupAttachment(URoot);
 	UBoxCollider->SetupAttachment(UStaticMesh);
+	UStaticHeadMesh->SetupAttachment(URoot);
+	UHeadCollider->SetupAttachment(UStaticHeadMesh);
 	
 }
 

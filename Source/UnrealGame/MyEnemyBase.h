@@ -31,6 +31,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
 	
+	
 	UPROPERTY(BlueprintReadWrite)
 		 UWidgetComponent* UMyWidget;
 	UPROPERTY(EditAnywhere)
@@ -50,7 +51,11 @@ protected:
 	FVector SpawnPos;
 	void FRevive();
 public:	
-	// Called every frame
+	UPROPERTY(EditAnywhere)
+		class UBoxComponent* UHeadCollider;
+
+	UPROPERTY(EditAnywhere)
+		class UStaticMeshComponent* UStaticHeadMesh;
 	UFUNCTION(BlueprintCallable)
 		void FGetDamage(float damage);
 	UFUNCTION(BlueprintCallable)

@@ -10,6 +10,7 @@
 #include "GameFramework/InputSettings.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "BoxComponent.generated.h"
 #include "MotionControllerComponent.h"
 #include "UnrealGame/MyEnemyBase.h"
 #include "EngineUtils.h"
@@ -125,7 +126,8 @@ void AUnrealGameCharacter::SetupPlayerInputComponent(class UInputComponent* Play
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AUnrealGameCharacter::OnFire);
-
+	//Grenade
+	PlayerInputComponent->BindAction("Grenade", IE_Pressed, this, &AUnrealGameCharacter::OnGrenade);
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
 
@@ -176,11 +178,20 @@ void AUnrealGameCharacter::OnFire()
 				if (GetWorld()->LineTraceSingleByChannel(hit, FP_MuzzleLocation->GetComponentLocation(), endPos, ECollisionChannel::ECC_PhysicsBody, QueryParams))
 				{
 					if (hit.Actor.Get()) {
-						UE_LOG(LogTemp, Log, TEXT("golpeo"));
+						
 						AMyEnemyBase* myEnemy = Cast<AMyEnemyBase>(hit.Actor.Get());
 						if (myEnemy != nullptr) {
 							
-							myEnemy->FGetDamage(FDamage);
+							UStaticMeshComponent* headShot = Cast<UStaticMeshComponent>(hit.Component.Get());
+							if (headShot == myEnemy->UStaticHeadMesh) {
+								myEnemy->FGetDamage(FDamage*FMultiplyOfDamage);
+								UE_LOG(LogTemp, Log, TEXT("golpeo en la cabeza"));
+							}
+							else {
+								myEnemy->FGetDamage(FDamage);
+							}
+
+							
 						}
 					}
 					
@@ -211,6 +222,55 @@ void AUnrealGameCharacter::OnFire()
 	}
 }
 
+void AUnrealGameCharacter::OnGrenade()
+{
+	// try and fire a projectile
+	if (ProjectileClass != NULL)
+	{
+		UWorld* const World = GetWorld();
+		if (World != NULL)
+		{
+			if (bUsingMotionControllers)
+			{
+				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
+				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
+				World->SpawnActor<AUnrealGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+			}
+			else
+			{
+				const FRotator SpawnRotation = GetControlRotation();
+				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+				const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
+				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FFireTraceDistance);
+				//Set Spawn Collision Handling Override
+				FActorSpawnParameters ActorSpawnParams;
+				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
+				// spawn the projectile at the muzzle
+				World->SpawnActor<AUnrealGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+				
+
+			}
+		}
+	}
+
+	// try and play the sound if specified
+	if (FireSound != NULL)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+	}
+
+	// try and play a firing animation if specified
+	if (FireAnimation != NULL)
+	{
+		// Get the animation object for the arms mesh
+		UAnimInstance* AnimInstance = Mesh1P->GetAnimInstance();
+		if (AnimInstance != NULL)
+		{
+			AnimInstance->Montage_Play(FireAnimation, 1.f);
+		}
+	}
+}
 void AUnrealGameCharacter::OnResetVR()
 {
 	UHeadMountedDisplayFunctionLibrary::ResetOrientationAndPosition();
