@@ -23,4 +23,25 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* Root;
+
+	UPROPERTY(EditAnywhere)
+	class UBoxComponent* BoxCollider;
+
+	UPROPERTY(EditAnywhere)
+	class UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(EditAnywhere)
+	float Damage;
+
+	UFUNCTION()
+	virtual void OnBoxColliderBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	virtual void OnBoxColliderEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+
 };
