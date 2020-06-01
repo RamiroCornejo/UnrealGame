@@ -7,7 +7,9 @@
 #include "Components/WidgetComponent.h"
 #include "UnrealGame/MyPlayerWidget.h"
 #include "UnrealGame/UnrealGameCharacter.h"
+#include "UnrealGame/EnemyBullet.h"
 #include "MyEnemyBase.generated.h"
+
 
 
 UCLASS()
@@ -30,8 +32,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
-	
-	
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AEnemyBullet> TMyBullet;
+	bool shootTest;
 	UPROPERTY(BlueprintReadWrite)
 		 UWidgetComponent* UMyWidget;
 	UPROPERTY(EditAnywhere)

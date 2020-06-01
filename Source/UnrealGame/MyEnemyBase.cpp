@@ -9,6 +9,7 @@
 #include "UnrealGame/UnrealGameCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/StaticMeshComponent.h"
+#include "UnrealGame/EnemyBullet.h"
 
 // Sets default values
 AMyEnemyBase::AMyEnemyBase()
@@ -60,6 +61,15 @@ void AMyEnemyBase::Tick(float DeltaTime)
 			FVector location = GetActorLocation();
 			location += GetActorForwardVector()*FSpeed;
 			SetActorLocation(location);
+			if (shootTest == false) {
+				FActorSpawnParameters ActorSpawnParams;
+				GetWorld()->SpawnActor<AEnemyBullet>(TMyBullet, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
+				shootTest = true;
+			}
+
+		}
+		else {
+			shootTest = false;
 		}
 	}
 	else {

@@ -80,6 +80,8 @@ public:
 	/** Whether to use motion controller location for aiming. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
+	UFUNCTION(BlueprintCallable)
+		void FGetDamage(float damage);
 
 protected:
 	
@@ -121,8 +123,7 @@ protected:
 		float FDamage = 1.f;
 	UPROPERTY(EditDefaultsOnly)
 		int FMultiplyOfDamage = 2;
-	UFUNCTION(BlueprintCallable)
-		void FGetDamage(float damage);
+	
 	UPROPERTY(EditAnywhere)
 		float FMaxLife;
 
