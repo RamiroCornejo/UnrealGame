@@ -31,7 +31,7 @@ void AEnemyBullet::BeginPlay()
 void AEnemyBullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 void AEnemyBullet::NotifyActorBeginOverlap(AActor* Other)
 {
@@ -43,6 +43,7 @@ void AEnemyBullet::NotifyActorBeginOverlap(AActor* Other)
 		Pawn->FGetDamage(FDamage);
 		Destroy();
 	}
+
 
 }
 

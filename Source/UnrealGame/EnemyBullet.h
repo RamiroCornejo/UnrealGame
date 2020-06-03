@@ -33,7 +33,7 @@ protected:
 	
 	UFUNCTION()
 		virtual void NotifyActorEndOverlap(AActor* Other) override;
-	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

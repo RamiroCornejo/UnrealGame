@@ -16,6 +16,7 @@
 #include "EngineUtils.h"
 #include "DrawDebugHelpers.h"
 #include "UnrealGame/MyEnemyBase.h"
+#include "UnrealGame/MyGrenade.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -225,7 +226,7 @@ void AUnrealGameCharacter::OnFire()
 void AUnrealGameCharacter::OnGrenade()
 {
 	// try and fire a projectile
-	if (ProjectileClass != NULL)
+	if (AGrenadeClass != NULL)
 	{
 		UWorld* const World = GetWorld();
 		if (World != NULL)
@@ -234,7 +235,7 @@ void AUnrealGameCharacter::OnGrenade()
 			{
 				const FRotator SpawnRotation = VR_MuzzleLocation->GetComponentRotation();
 				const FVector SpawnLocation = VR_MuzzleLocation->GetComponentLocation();
-				World->SpawnActor<AUnrealGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+				World->SpawnActor<AMyGrenade>(AGrenadeClass, SpawnLocation, SpawnRotation);
 			}
 			else
 			{
@@ -247,7 +248,7 @@ void AUnrealGameCharacter::OnGrenade()
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 				// spawn the projectile at the muzzle
-				World->SpawnActor<AUnrealGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+				World->SpawnActor<AMyGrenade>(AGrenadeClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 				
 
 			}
