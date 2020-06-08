@@ -10,6 +10,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/StaticMeshComponent.h"
 #include "UnrealGame/EnemyBullet.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 AMyEnemyBase::AMyEnemyBase()
@@ -21,11 +22,13 @@ AMyEnemyBase::AMyEnemyBase()
 	UBoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
 
 	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
+	USkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComp"));
 	UHeadCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("HeadCollider"));
 
 	UStaticHeadMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("HeadMesh"));
 
 	UStaticMesh->SetupAttachment(URoot);
+	USkeletalMesh->SetupAttachment(URoot);
 	UBoxCollider->SetupAttachment(UStaticMesh);
 	UStaticHeadMesh->SetupAttachment(URoot);
 	UHeadCollider->SetupAttachment(UStaticHeadMesh);

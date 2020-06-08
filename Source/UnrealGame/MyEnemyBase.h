@@ -33,6 +33,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
 	UPROPERTY(EditAnywhere)
+		class USkeletalMeshComponent* USkeletalMesh;
+	UPROPERTY(EditAnywhere)
 		TSubclassOf<AEnemyBullet> TMyBullet;
 	bool shootTest;
 	UPROPERTY(BlueprintReadWrite)
