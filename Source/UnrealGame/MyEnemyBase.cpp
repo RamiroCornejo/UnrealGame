@@ -54,6 +54,9 @@ void AMyEnemyBase::BeginPlay()
 void AMyEnemyBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (!bAlarm) {
+		return;
+	}
 	if (APlayer != nullptr) {
 		FVector TargetPosition = APlayer->GetActorLocation();		
 		FVector myPosition = FVector(GetActorLocation().X, GetActorLocation().Y,0.f);

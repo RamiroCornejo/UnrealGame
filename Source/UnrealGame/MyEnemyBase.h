@@ -71,6 +71,7 @@ public:
 	void GetPlayer();
 	void RemovePlayer();
 	// Called to bind functionality to input
+	bool bAlarm=false;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
