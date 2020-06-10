@@ -11,6 +11,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "UnrealGame/EnemyBullet.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "MyAnimInstance.h"
 
 // Sets default values
 AMyEnemyBase::AMyEnemyBase()
@@ -39,7 +40,10 @@ AMyEnemyBase::AMyEnemyBase()
 void AMyEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
+	//auto* anim = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
 	
+	MyAnim = Cast<UMyAnimInstance>(USkeletalMesh->GetAnimInstance());
+
 	FCurrentHealth = FMaxHealth;
 	
 	SpawnPos = GetActorLocation();
@@ -58,6 +62,11 @@ void AMyEnemyBase::Tick(float DeltaTime)
 		FVector WorldUp = FVector::UpVector;
 		FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, WorldUp);
 		SetActorRotation(Rot);
+		if (MyAnim != nullptr)
+		{
+			MyAnim->bWalk = true;
+		}
+
 		float distance = GetDistanceTo(APlayer);
 		if (distance > FMaxDistance) {
 			//FString IntAsString = FString::FromInt(distance);
@@ -68,11 +77,22 @@ void AMyEnemyBase::Tick(float DeltaTime)
 				FActorSpawnParameters ActorSpawnParams;
 				GetWorld()->SpawnActor<AEnemyBullet>(TMyBullet, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
 				shootTest = true;
+				
+				if (MyAnim != nullptr)
+				{
+					MyAnim->bWalk = false;
+					MyAnim->bShoot = true;
+				}
 			}
 
 		}
 		else {
 			shootTest = false;
+			if (MyAnim != nullptr)
+			{
+				
+				MyAnim->bShoot = false;
+			}
 		}
 	}
 	else {
@@ -107,6 +127,8 @@ void AMyEnemyBase::FGetWidget(UWidgetComponent* widget)
 {
 	UMyWidget = widget;
 }
+
+
 void AMyEnemyBase::GetPlayer()
 {
 	//for (TActorIterator<AUnrealGameCharacter> It(GetWorld()); It; ++It)

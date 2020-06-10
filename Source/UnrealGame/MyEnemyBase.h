@@ -29,7 +29,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UBoxCollider;
-
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
 	UPROPERTY(EditAnywhere)
@@ -39,6 +38,9 @@ protected:
 	bool shootTest;
 	UPROPERTY(BlueprintReadWrite)
 		 UWidgetComponent* UMyWidget;
+public:
+	UPROPERTY(EditAnywhere)
+		class UMyAnimInstance* MyAnim;
 	UPROPERTY(EditAnywhere)
 		float FMaxHealth;
 	float FCurrentHealth;

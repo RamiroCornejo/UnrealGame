@@ -13,5 +13,11 @@ UCLASS()
 class UNREALGAME_API UMyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+
+public:
+	UPROPERTY(BlueprintReadWrite)
+	bool bWalk;
+	UPROPERTY(BlueprintReadWrite)
+	bool bShoot;
 	
 };
