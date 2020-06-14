@@ -6,6 +6,8 @@
 #include "CollisionShape.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "UnrealGame/MyEnemyBase.h"
 
 // Sets default values
@@ -50,6 +52,7 @@ void AMyGrenade::Explode()
 			}
 		}
 	}
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionParticle, GetActorLocation());
 
 }
 

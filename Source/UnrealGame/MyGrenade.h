@@ -28,6 +28,10 @@ protected:
 		float FDamage;
 	void Explode();
 	bool bExploted=true;
+
+	UPROPERTY(EditDefaultsOnly)
+	class UParticleSystem* explosionParticle;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
