@@ -27,7 +27,7 @@ protected:
 		class UStaticMeshComponent* UStaticMesh;
 	
 	UPROPERTY(EditAnywhere)
-		float FDamage;
+		float Damage;
 	UFUNCTION()
 		virtual void NotifyActorBeginOverlap(AActor* Other) override;
 	

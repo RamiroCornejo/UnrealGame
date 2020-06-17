@@ -44,7 +44,7 @@ void AMyEnemyBase::BeginPlay()
 	
 	MyAnim = Cast<UMyAnimInstance>(USkeletalMesh->GetAnimInstance());
 
-	FCurrentHealth = FMaxHealth;
+	CurrentHealth = MaxHealth;
 	
 	SpawnPos = GetActorLocation();
 	
@@ -54,9 +54,9 @@ void AMyEnemyBase::BeginPlay()
 void AMyEnemyBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/*if (!bAlarm) {
+	if (!bAlarm) {
 		return;
-	}*/
+	}
 	if (APlayer != nullptr) {
 		FVector TargetPosition = APlayer->GetActorLocation();		
 		FVector myPosition = FVector(GetActorLocation().X, GetActorLocation().Y,0.f);
@@ -71,10 +71,10 @@ void AMyEnemyBase::Tick(float DeltaTime)
 		}
 
 		float distance = GetDistanceTo(APlayer);
-		if (distance > FMaxDistance) {
+		if (distance > MaxDistance) {
 			//FString IntAsString = FString::FromInt(distance);
 			FVector location = GetActorLocation();
-			location += GetActorForwardVector()*FSpeed;
+			location += GetActorForwardVector()*Speed;
 			SetActorLocation(location);
 			if (shootTest == false) {
 				FActorSpawnParameters ActorSpawnParams;
@@ -109,15 +109,15 @@ void AMyEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-void AMyEnemyBase::FGetDamage(float damage)
+void AMyEnemyBase::_TakeDamage(float damage)
 {
-	FCurrentHealth -= damage;
-	float FPercentage = FCurrentHealth / FMaxHealth;
+	CurrentHealth -= damage;
+	float FPercentage = CurrentHealth / MaxHealth;
 	UBarLife->FUpdateLifeBar(FPercentage);
-	if (FCurrentHealth <= 0) {
-		if (FLives > 0) {
-			FRevive();
-			FLives--;
+	if (CurrentHealth <= 0) {
+		if (Lives > 0) {
+			Revive();
+			Lives--;
 		}
 		else {
 			Destroy();
@@ -148,10 +148,10 @@ void AMyEnemyBase::RemovePlayer()
 {
 	APlayer = nullptr;
 }
-void AMyEnemyBase::FRevive()
+void AMyEnemyBase::Revive()
 {
 	SetActorLocation(SpawnPos);
-	FCurrentHealth = FMaxHealth;
+	CurrentHealth = MaxHealth;
 	UBarLife->FUpdateLifeBar(1);
 }
 

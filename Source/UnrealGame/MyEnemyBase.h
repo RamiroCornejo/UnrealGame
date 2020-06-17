@@ -42,21 +42,21 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UMyAnimInstance* MyAnim;
 	UPROPERTY(EditAnywhere)
-		float FMaxHealth;
-	float FCurrentHealth;
+		float MaxHealth;
+	float CurrentHealth;
 	
 	UPROPERTY(BlueprintReadWrite)
 		 UMyPlayerWidget* UBarLife;
 	UPROPERTY()
 		AUnrealGameCharacter* APlayer;
 	UPROPERTY(EditAnywhere)
-		float FMaxDistance;
+		float MaxDistance;
 	UPROPERTY(EditAnywhere)
-		float FSpeed;
+		float Speed;
 	UPROPERTY(EditAnywhere)
-		int FLives;
+		int Lives;
 	FVector SpawnPos;
-	void FRevive();
+	void Revive();
 public:	
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UHeadCollider;
@@ -64,7 +64,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticHeadMesh;
 	UFUNCTION(BlueprintCallable)
-		void FGetDamage(float damage);
+		void _TakeDamage(float damage);
 	UFUNCTION(BlueprintCallable)
 		void FGetWidget(UWidgetComponent* widget);
 	virtual void Tick(float DeltaTime) override;

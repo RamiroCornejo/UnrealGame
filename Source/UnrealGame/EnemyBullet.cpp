@@ -40,7 +40,7 @@ void AEnemyBullet::NotifyActorBeginOverlap(AActor* Other)
 	//UE_LOG(LogTemp, Log, TEXT("We hit ndea!"));
 	if (IsValid(Pawn))
 	{
-		Pawn->FGetDamage(FDamage);
+		Pawn->_TakeDamage(Damage);
 		Destroy();
 	}
 

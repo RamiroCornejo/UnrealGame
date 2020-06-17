@@ -29,8 +29,8 @@ void AMyGrenade::BeginPlay()
 void AMyGrenade::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FCurrentTime += DeltaTime;
-	if (FCurrentTime >= FTimer&&bExploted) {
+	CurrentTime += DeltaTime;
+	if (CurrentTime >= Timer&&bExploted) {
 		Explode();
 		bExploted=false;
 		Destroy();
@@ -41,14 +41,14 @@ void AMyGrenade::Explode()
 {
 	TArray<FHitResult> Outhits;
 	FVector location = GetActorLocation();
-	FCollisionShape myColSphere = FCollisionShape::MakeSphere(FRange);
+	FCollisionShape myColSphere = FCollisionShape::MakeSphere(Range);
 	//bool hit = GetWorld()->SweepMultiByChannel(Outhits, location, location, FQuat::Identity, ECollisionChannel::ECC_PhysicsBody, myColSphere);
 	if (GetWorld()->SweepMultiByChannel(Outhits, location, location, FQuat::Identity, ECollisionChannel::ECC_PhysicsBody, myColSphere)) {
 		for (auto& Hit : Outhits) {
 
 			AMyEnemyBase* myEnemy = Cast<AMyEnemyBase>(Hit.Actor.Get());
 			if (IsValid(myEnemy)) {
-				myEnemy->FGetDamage(FDamage);
+				myEnemy->_TakeDamage(Damage);
 			}
 		}
 	}

@@ -83,7 +83,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
 	UFUNCTION(BlueprintCallable)
-		void FGetDamage(float damage);
+		void _TakeDamage(float damage);
 
 protected:
 	
@@ -120,20 +120,20 @@ protected:
 		void RestartLife();
 
 	UPROPERTY(EditDefaultsOnly)
-		float FFireTraceDistance = 2000.0f;
+		float FireTraceDistance = 2000.0f;
 	UPROPERTY(EditDefaultsOnly)
-		float FDamage = 1.f;
+		float Damage = 1.f;
 	UPROPERTY(EditDefaultsOnly)
-		int FMultiplyOfDamage = 2;
+		int MultiplyOfDamage = 2;
 	
 	UPROPERTY(EditAnywhere)
-		float FMaxLife;
+		float MaxLife;
 
-	float FCurrentLife;
+	float CurrentLife;
 	UPROPERTY(EditAnywhere)
-		int FLifes;
+		int Lifes;
 	UPROPERTY(EditAnywhere)
-		FString FDeathString;
+		FString DeathString;
 	struct TouchData
 	{
 		TouchData() { bIsPressed = false;Location=FVector::ZeroVector;}

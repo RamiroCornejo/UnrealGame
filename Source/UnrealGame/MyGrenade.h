@@ -20,12 +20,12 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditAnywhere)
-	float FTimer;
-	float FCurrentTime=0.f;
+	float Timer;
+	float CurrentTime=0.f;
 	UPROPERTY(EditAnywhere)
-		float FRange;
+		float Range;
 	UPROPERTY(EditAnywhere)
-		float FDamage;
+		float Damage;
 	void Explode();
 	bool bExploted=true;
 

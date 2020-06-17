@@ -166,7 +166,7 @@ void AUnrealGameCharacter::OnFire()
 				const FRotator SpawnRotation = GetControlRotation();
 				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 				const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
-				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FFireTraceDistance);
+				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FireTraceDistance);
 				//Set Spawn Collision Handling Override
 				FActorSpawnParameters ActorSpawnParams;
 				//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
@@ -185,11 +185,11 @@ void AUnrealGameCharacter::OnFire()
 							
 							UStaticMeshComponent* headShot = Cast<UStaticMeshComponent>(hit.Component.Get());
 							if (headShot == myEnemy->UStaticHeadMesh) {
-								myEnemy->FGetDamage(FDamage*FMultiplyOfDamage);
+								myEnemy->_TakeDamage(Damage*MultiplyOfDamage);
 								UE_LOG(LogTemp, Log, TEXT("golpeo en la cabeza"));
 							}
 							else {
-								myEnemy->FGetDamage(FDamage);
+								myEnemy->_TakeDamage(Damage);
 							}
 
 							
@@ -242,7 +242,7 @@ void AUnrealGameCharacter::OnGrenade()
 				const FRotator SpawnRotation = GetControlRotation();
 				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 				const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
-				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FFireTraceDistance);
+				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FireTraceDistance);
 				//Set Spawn Collision Handling Override
 				FActorSpawnParameters ActorSpawnParams;
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
@@ -385,19 +385,19 @@ bool AUnrealGameCharacter::EnableTouchscreenMovement(class UInputComponent* Play
 	return false;
 }
 
-void AUnrealGameCharacter::FGetDamage(float damage) {
+void AUnrealGameCharacter::_TakeDamage(float damage) {
 
-	FCurrentLife -= damage;
-	FString IntAsString = FString::FromInt(FCurrentLife);
+	CurrentLife -= damage;
+	FString IntAsString = FString::FromInt(CurrentLife);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, *IntAsString);
 	// If the damage depletes our health set our lifespan to zero - which will destroy the actor 
-	float Porcentaje = FCurrentLife / FMaxLife;
+	float Porcentaje = CurrentLife / MaxLife;
 	ULifeBar->FUpdateLifeBar(Porcentaje);
 
-	if (FCurrentLife <= 0.f)
+	if (CurrentLife <= 0.f)
 	{
-		if (FLifes > 0) {
-			FLifes--;
+		if (Lifes > 0) {
+			Lifes--;
 
 
 			AMyLevelGameMode* myGamemode = Cast<AMyLevelGameMode>(GetWorld()->GetAuthGameMode());
@@ -405,19 +405,19 @@ void AUnrealGameCharacter::FGetDamage(float damage) {
 				//Destroy();
 				UE_LOG(LogTemp, Log, TEXT("tiene el gamemode bueno"));
 				ULifeBar->RemoveFromViewport();
-				myGamemode->FRestart(this);
+				myGamemode->Restart(this);
 			}
 		}
 		else {
 			if (GEngine) {
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, *FDeathString);
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, *DeathString);
 			}
 		}
 
 	}
 }
 void AUnrealGameCharacter::RestartLife() {
-	FCurrentLife = FMaxLife;
+	CurrentLife = MaxLife;
 
 	ULifeBar = CreateWidget<UMyPlayerWidget>(GetWorld()->GetFirstPlayerController(), TCharacterInfoWidgetClass);
 	ULifeBar->AddToViewport(1);
