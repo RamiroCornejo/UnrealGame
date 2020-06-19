@@ -12,6 +12,7 @@
 #include "UnrealGame/EnemyBullet.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "MyAnimInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMyEnemyBase::AMyEnemyBase()
@@ -150,6 +151,7 @@ void AMyEnemyBase::RemovePlayer()
 }
 void AMyEnemyBase::Revive()
 {
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), reviveParticle, GetActorLocation());
 	SetActorLocation(SpawnPos);
 	CurrentHealth = MaxHealth;
 	UBarLife->FUpdateLifeBar(1);

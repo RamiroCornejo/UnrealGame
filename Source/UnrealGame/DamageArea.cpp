@@ -10,7 +10,7 @@
 ADamageArea::ADamageArea()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 
@@ -52,7 +52,7 @@ void ADamageArea::OnBoxColliderBeginOverlap(UPrimitiveComponent* OverlappedCompo
 
 	if (IsValid(player))
 	{
-		//player->FGetDamage(Damage);
+		player->_TakeDamage(Damage);
 
 	}
 }

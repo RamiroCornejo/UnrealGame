@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* URoot;
 
+	UPROPERTY(EditDefaultsOnly)
+		class UParticleSystem* reviveParticle;
+
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UBoxCollider;
 	UPROPERTY(EditAnywhere)

@@ -32,7 +32,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Damage Paramaters")
 	float Damage;
 
 	UFUNCTION()
