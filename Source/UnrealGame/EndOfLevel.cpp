@@ -35,10 +35,10 @@ void AEndOfLevel::NotifyActorBeginOverlap(AActor* Other)
 	//UE_LOG(LogTemp, Log, TEXT("We hit ndea!"));
 	if (IsValid(Pawn))
 	{
-		/*AMyLevelGameMode* myGamemode = Cast<AMyLevelGameMode>(GetWorld()->GetAuthGameMode());
+		AMyLevelGameMode* myGamemode = Cast<AMyLevelGameMode>(GetWorld()->GetAuthGameMode());
 		if (myGamemode != nullptr) {
 			myGamemode->LoadLevel(MapName);
-		}*/
+		}
 	}
 
 
