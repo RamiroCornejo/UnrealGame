@@ -30,6 +30,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 		class UParticleSystem* reviveParticle;
 
+	UPROPERTY(EditDefaultsOnly)
+		UMaterialInterface* Material;
+
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UBoxCollider;
 	UPROPERTY(EditAnywhere)
@@ -63,7 +66,7 @@ public:
 public:	
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UHeadCollider;
-
+public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticHeadMesh;
 	UFUNCTION(BlueprintCallable)

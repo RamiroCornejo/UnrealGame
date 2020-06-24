@@ -11,7 +11,13 @@ AEndOfLevel::AEndOfLevel()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
+	//UMyWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("widget"));
+	UBoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
 
+	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
+	UStaticMesh->SetupAttachment(URoot);
+	UBoxCollider->SetupAttachment(UStaticMesh);
 }
 
 // Called when the game starts or when spawned

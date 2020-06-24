@@ -8,16 +8,16 @@ void AMyLevelGameMode::Restart(AUnrealGameCharacter* character) {
 	AMyLevelPlayerState* myState = Cast<AMyLevelPlayerState>(GetWorld()->GetFirstPlayerController()->PlayerState);
 	myState->lifes--;
 
-	/*if (myState->lifes == 0) {
+	if (myState->lifes == 0) {
 		GetWorld()->ServerTravel(MapName);
-	}*/
-	//else {
+	}
+	else {
 		character->Destroy();
 		RestartPlayer(GetWorld()->GetFirstPlayerController());
-	//}
+	}
 
 
-	//GetDefaultPawnClassForController_Implementation(character->Controller);*/
+	GetDefaultPawnClassForController_Implementation(character->Controller);
 
 }
 void AMyLevelGameMode::LoadLevel(FString mapName) {

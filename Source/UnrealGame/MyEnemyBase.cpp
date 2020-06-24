@@ -34,6 +34,8 @@ AMyEnemyBase::AMyEnemyBase()
 	UBoxCollider->SetupAttachment(UStaticMesh);
 	UStaticHeadMesh->SetupAttachment(URoot);
 	UHeadCollider->SetupAttachment(UStaticHeadMesh);
+
+	
 	
 }
 
@@ -48,6 +50,8 @@ void AMyEnemyBase::BeginPlay()
 	CurrentHealth = MaxHealth;
 	
 	SpawnPos = GetActorLocation();
+
+	UStaticHeadMesh->SetMaterial(0, Material);
 	
 }
 
