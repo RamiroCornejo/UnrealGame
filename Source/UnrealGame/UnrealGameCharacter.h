@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "UnrealGame/MyPlayerWidget.h"
 #include "UnrealGameCharacter.generated.h"
 
 class UInputComponent;
@@ -111,18 +110,19 @@ protected:
 	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
 	 */
 	void LookUpAtRate(float Rate);
-	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<UMyPlayerWidget> TCharacterInfoWidgetClass;
+	
 
 	UPROPERTY()
-		UMyPlayerWidget* ULifeBar;
+		class AHealthComponent* HealthComponent;
 	UFUNCTION()
 		void RestartLife();
 
 	UPROPERTY(EditDefaultsOnly)
 		float FireTraceDistance = 2000.0f;
+
 	UPROPERTY(EditDefaultsOnly)
 		float Damage = 1.f;
+
 	UPROPERTY(EditDefaultsOnly)
 		int MultiplyOfDamage = 2;
 	

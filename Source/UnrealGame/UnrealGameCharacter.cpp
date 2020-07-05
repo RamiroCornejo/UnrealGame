@@ -16,6 +16,7 @@
 #include "EngineUtils.h"
 #include "DrawDebugHelpers.h"
 #include "UnrealGame/MyEnemyBase.h"
+#include "UnrealGame/HealthComponent.h"
 #include "UnrealGame/MyGrenade.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
 
@@ -392,7 +393,7 @@ void AUnrealGameCharacter::_TakeDamage(float damage) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, *IntAsString);
 	// If the damage depletes our health set our lifespan to zero - which will destroy the actor 
 	float Porcentaje = CurrentLife / MaxLife;
-	ULifeBar->FUpdateLifeBar(Porcentaje);
+	HealthComponent->UpdateHeatlhBar(Porcentaje);
 
 	if (CurrentLife <= 0.f)
 	{
@@ -404,7 +405,8 @@ void AUnrealGameCharacter::_TakeDamage(float damage) {
 			if (myGamemode != nullptr) {
 				//Destroy();
 				UE_LOG(LogTemp, Log, TEXT("tiene el gamemode bueno"));
-				ULifeBar->RemoveFromViewport();
+				HealthComponent->RemoveHeatlhBar();
+				HealthComponent = nullptr;
 				myGamemode->Restart(this);
 			}
 		}
@@ -413,14 +415,17 @@ void AUnrealGameCharacter::_TakeDamage(float damage) {
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, *DeathString);
 			}
 		}
-
+		
 	}
 }
 void AUnrealGameCharacter::RestartLife() {
 	CurrentLife = MaxLife;
 
-	ULifeBar = CreateWidget<UMyPlayerWidget>(GetWorld()->GetFirstPlayerController(), TCharacterInfoWidgetClass);
-	ULifeBar->AddToViewport(1);
+	for (TActorIterator<AHealthComponent> It(GetWorld()); It; ++It)
+	{
+		HealthComponent = *It;
+	}
+	HealthComponent->SetHealthBar();
 	UE_LOG(LogTemp, Log, TEXT("empezo"));
 	for (TActorIterator<AMyEnemyBase> It(GetWorld()); It; ++It)
 	{
