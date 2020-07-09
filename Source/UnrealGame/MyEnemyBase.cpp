@@ -43,13 +43,12 @@ AMyEnemyBase::AMyEnemyBase()
 void AMyEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
-	//auto* anim = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
 	
 	MyAnim = Cast<UMyAnimInstance>(USkeletalMesh->GetAnimInstance());
 
 	CurrentHealth = MaxHealth;
 	
-	SpawnPos = GetActorLocation();
+	FSpawnPos = GetActorLocation();
 
 	UStaticHeadMesh->SetMaterial(0, Material);
 	
@@ -77,14 +76,13 @@ void AMyEnemyBase::Tick(float DeltaTime)
 
 		float distance = GetDistanceTo(APlayer);
 		if (distance > MaxDistance) {
-			//FString IntAsString = FString::FromInt(distance);
 			FVector location = GetActorLocation();
 			location += GetActorForwardVector()*Speed;
 			SetActorLocation(location);
-			if (shootTest == false) {
+			if (bShootTest == false) {
 				FActorSpawnParameters ActorSpawnParams;
 				GetWorld()->SpawnActor<AEnemyBullet>(TMyBullet, GetActorLocation(), GetActorRotation(), ActorSpawnParams);
-				shootTest = true;
+				bShootTest = true;
 				
 				if (MyAnim != nullptr)
 				{
@@ -95,7 +93,7 @@ void AMyEnemyBase::Tick(float DeltaTime)
 
 		}
 		else {
-			shootTest = false;
+			bShootTest = false;
 			if (MyAnim != nullptr)
 			{
 				MyAnim->bWalk = false;
@@ -139,15 +137,7 @@ void AMyEnemyBase::FGetWidget(UWidgetComponent* widget)
 
 void AMyEnemyBase::GetPlayer()
 {
-	//for (TActorIterator<AUnrealGameCharacter> It(GetWorld()); It; ++It)
-	//{
-	//	APlayer = *It;
-	//	// ...
-	//}
 	APlayer = Cast<AUnrealGameCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	if (APlayer != nullptr) {
-		UE_LOG(LogTemp, Log, TEXT("tengo al player"));
-	}
 }
 void AMyEnemyBase::RemovePlayer()
 {
@@ -156,7 +146,7 @@ void AMyEnemyBase::RemovePlayer()
 void AMyEnemyBase::Revive()
 {
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), reviveParticle, GetActorLocation());
-	SetActorLocation(SpawnPos);
+	SetActorLocation(FSpawnPos);
 	CurrentHealth = MaxHealth;
 	UBarLife->FUpdateLifeBar(1);
 }

@@ -13,7 +13,6 @@ AAlarmEnemys::AAlarmEnemys()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
-	//UMyWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("widget"));
 	UBoxCollider = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerCollider"));
 
 	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
@@ -40,7 +39,6 @@ void AAlarmEnemys::NotifyActorBeginOverlap(AActor* Other)
 {
 	AUnrealGameCharacter* Pawn = Cast<AUnrealGameCharacter>(Other);
 
-	//UE_LOG(LogTemp, Log, TEXT("We hit ndea!"));
 	if (IsValid(Pawn))
 	{
 		for (int i = 0; i < GroupOfEnemys.Num(); i++)

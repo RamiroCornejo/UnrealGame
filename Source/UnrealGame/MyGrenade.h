@@ -21,12 +21,17 @@ protected:
 	
 	UPROPERTY(EditAnywhere)
 	float Timer;
+
 	float CurrentTime=0.f;
+
 	UPROPERTY(EditAnywhere)
 		float Range;
+
 	UPROPERTY(EditAnywhere)
 		float Damage;
+
 	void Explode();
+
 	bool bExploted=true;
 
 	UPROPERTY(EditDefaultsOnly)

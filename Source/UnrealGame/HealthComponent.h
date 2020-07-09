@@ -27,8 +27,11 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 	void SetHealthBar();
+
 	void UpdateHeatlhBar(float percentage);
+
 	void RemoveHeatlhBar();
 
 };

@@ -42,7 +42,6 @@ void AMyGrenade::Explode()
 	TArray<FHitResult> Outhits;
 	FVector location = GetActorLocation();
 	FCollisionShape myColSphere = FCollisionShape::MakeSphere(Range);
-	//bool hit = GetWorld()->SweepMultiByChannel(Outhits, location, location, FQuat::Identity, ECollisionChannel::ECC_PhysicsBody, myColSphere);
 	if (GetWorld()->SweepMultiByChannel(Outhits, location, location, FQuat::Identity, ECollisionChannel::ECC_PhysicsBody, myColSphere)) {
 		for (auto& Hit : Outhits) {
 

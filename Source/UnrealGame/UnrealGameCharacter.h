@@ -130,10 +130,13 @@ protected:
 		float MaxLife;
 
 	float CurrentLife;
+
 	UPROPERTY(EditAnywhere)
 		int Lifes;
+
 	UPROPERTY(EditAnywhere)
 		FString DeathString;
+
 	struct TouchData
 	{
 		TouchData() { bIsPressed = false;Location=FVector::ZeroVector;}

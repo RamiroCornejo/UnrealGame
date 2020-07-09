@@ -16,5 +16,6 @@ class UNREALGAME_API AMyLevelPlayerState : public APlayerState
 public:
 	UPROPERTY(EditAnywhere)
 		int lifes;
+
 	void Death();
 };

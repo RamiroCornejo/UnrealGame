@@ -35,33 +35,47 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* UBoxCollider;
+
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
+
 	UPROPERTY(EditAnywhere)
 		class USkeletalMeshComponent* USkeletalMesh;
+
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<AEnemyBullet> TMyBullet;
-	bool shootTest;
+
+	bool bShootTest;
+
 	UPROPERTY(BlueprintReadWrite)
 		 UWidgetComponent* UMyWidget;
+
 public:
 	UPROPERTY(EditAnywhere)
 		class UMyAnimInstance* MyAnim;
+
 	UPROPERTY(EditAnywhere)
 		float MaxHealth;
+
 	float CurrentHealth;
 	
 	UPROPERTY(BlueprintReadWrite)
 		 UMyPlayerWidget* UBarLife;
+
 	UPROPERTY()
 		AUnrealGameCharacter* APlayer;
+
 	UPROPERTY(EditAnywhere)
 		float MaxDistance;
+
 	UPROPERTY(EditAnywhere)
 		float Speed;
+
 	UPROPERTY(EditAnywhere)
 		int Lives;
-	FVector SpawnPos;
+
+	FVector FSpawnPos;
+
 	void Revive();
 public:	
 	UPROPERTY(EditAnywhere)
@@ -69,12 +83,17 @@ public:
 public:
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticHeadMesh;
+
 	UFUNCTION(BlueprintCallable)
 		void _TakeDamage(float damage);
+
 	UFUNCTION(BlueprintCallable)
 		void FGetWidget(UWidgetComponent* widget);
+
 	virtual void Tick(float DeltaTime) override;
+
 	void GetPlayer();
+
 	void RemovePlayer();
 	// Called to bind functionality to input
 	bool bAlarm=false;

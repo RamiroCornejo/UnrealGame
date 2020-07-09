@@ -16,7 +16,9 @@ class UNREALGAME_API AMyLevelGameMode : public AGameModeBase
 	GENERATED_BODY()
 public:
 	void Restart(AUnrealGameCharacter* character);
+
 	void LoadLevel(FString mapName);
+
 	UPROPERTY(EditDefaultsOnly)
 		FString MapName;
 		

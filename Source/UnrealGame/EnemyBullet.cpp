@@ -12,10 +12,9 @@ AEnemyBullet::AEnemyBullet()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
-	//UMyWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("widget"));
 	USphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("TriggerCollider"));
-
 	UStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComp"));
+
 	UStaticMesh->SetupAttachment(URoot);
 	USphereCollider->SetupAttachment(UStaticMesh);
 }
@@ -37,7 +36,6 @@ void AEnemyBullet::NotifyActorBeginOverlap(AActor* Other)
 {
 	AUnrealGameCharacter* Pawn = Cast<AUnrealGameCharacter>(Other);
 
-	//UE_LOG(LogTemp, Log, TEXT("We hit ndea!"));
 	if (IsValid(Pawn))
 	{
 		Pawn->_TakeDamage(Damage);

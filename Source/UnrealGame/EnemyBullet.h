@@ -23,11 +23,13 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		class USphereComponent* USphereCollider;
+
 	UPROPERTY(EditAnywhere)
 		class UStaticMeshComponent* UStaticMesh;
 	
 	UPROPERTY(EditAnywhere)
 		float Damage;
+
 	UFUNCTION()
 		virtual void NotifyActorBeginOverlap(AActor* Other) override;
 	

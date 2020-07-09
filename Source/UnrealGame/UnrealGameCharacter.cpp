@@ -170,10 +170,6 @@ void AUnrealGameCharacter::OnFire()
 				FVector endPos = FP_MuzzleLocation->GetComponentLocation() + (FP_MuzzleLocation->GetRightVector()*FireTraceDistance);
 				//Set Spawn Collision Handling Override
 				FActorSpawnParameters ActorSpawnParams;
-				//ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-				// spawn the projectile at the muzzle
-				//World->SpawnActor<AUnrealGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 				FCollisionQueryParams QueryParams;
 				QueryParams.AddIgnoredActor(this);
 				FHitResult hit;
@@ -187,7 +183,6 @@ void AUnrealGameCharacter::OnFire()
 							UStaticMeshComponent* headShot = Cast<UStaticMeshComponent>(hit.Component.Get());
 							if (headShot == myEnemy->UStaticHeadMesh) {
 								myEnemy->_TakeDamage(Damage*MultiplyOfDamage);
-								UE_LOG(LogTemp, Log, TEXT("golpeo en la cabeza"));
 							}
 							else {
 								myEnemy->_TakeDamage(Damage);
@@ -403,8 +398,7 @@ void AUnrealGameCharacter::_TakeDamage(float damage) {
 
 			AMyLevelGameMode* myGamemode = Cast<AMyLevelGameMode>(GetWorld()->GetAuthGameMode());
 			if (myGamemode != nullptr) {
-				//Destroy();
-				UE_LOG(LogTemp, Log, TEXT("tiene el gamemode bueno"));
+
 				HealthComponent->RemoveHeatlhBar();
 				HealthComponent = nullptr;
 				myGamemode->Restart(this);
@@ -426,12 +420,11 @@ void AUnrealGameCharacter::RestartLife() {
 		HealthComponent = *It;
 	}
 	HealthComponent->SetHealthBar();
-	UE_LOG(LogTemp, Log, TEXT("empezo"));
+
 	for (TActorIterator<AMyEnemyBase> It(GetWorld()); It; ++It)
 	{
 		AMyEnemyBase* myEnemie = *It;
 		myEnemie->RemovePlayer();
-		//UE_LOG(LogTemp, Log, TEXT("Busco"));
-		// ...
+		
 	}
 }
