@@ -4,7 +4,6 @@
 #include "MainMenuWidget.h"
 #include "Components/Button.h"
 
-
 void UMainMenuWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
@@ -15,5 +14,6 @@ void UMainMenuWidget::NativeOnInitialized()
 void UMainMenuWidget:: OnButtonPlayClicked()
 {
 	GetWorld()->ServerTravel(MapName);
+
 }
 

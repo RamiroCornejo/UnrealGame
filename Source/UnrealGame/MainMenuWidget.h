@@ -20,6 +20,10 @@ protected:
 	class UButton* Button_Play;
 
 
+	UPROPERTY(EditDefaultsOnly)
+	class UButton* Button_Menu;
+
+
 	virtual void NativeOnInitialized() override;
 
 	UFUNCTION()
